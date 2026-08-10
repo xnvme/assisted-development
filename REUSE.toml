@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: Simon A. F. Lund <os@safl.dk>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# Copyright and licensing for the files that cannot carry a comment header:
+# the images, and the root LICENSE that GitHub reads. Everything else states
+# it in its own header, where it stays attached to the file.
+
+version = 1
+
+SPDX-PackageName = "assisted-development"
+SPDX-PackageSupplier = "Simon A. F. Lund <os@safl.dk>"
+SPDX-PackageDownloadLocation = "https://github.com/xnvme/assisted-development"
+
+[[annotations]]
+path = ["assets/logo.png", "assets/logo-dark.png", "LICENSE"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Simon A. F. Lund <os@safl.dk>"
+SPDX-License-Identifier = "BSD-3-Clause"
