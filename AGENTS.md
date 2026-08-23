@@ -67,6 +67,13 @@ tested on, and what you could not exercise: hardware you do not have, a build
 you cannot produce, a path the suite does not reach. Never claim verification
 you did not perform.
 
+Where a pull request describes verification, keep it to the gap and the
+remedy. Name why CI does not cover the change, whether it added no test for it
+or the environment is missing, such as GPUs or particular hardware. Then say
+what was run by hand instead, and where. Close with what remains unexercised
+anywhere. A reviewer needs to know what the green checkmark does not cover; a
+narrative of the testing hides that rather than showing it.
+
 In a pull request description, name what a reviewer should look at carefully.
 Do not summarise the diff, which is already there. Then leave the merge to the
 human accepting the change.
