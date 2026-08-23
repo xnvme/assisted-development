@@ -62,6 +62,13 @@ rather than guessed at: its formatter, its linters, its static analysis, its
 test suite. Find out what CI runs and how long it takes, and batch your changes
 rather than pushing each small fix as you notice it.
 
+Every change carries a test. Whatever you add, remove, or alter, leave behind
+something that fails when it is wrong, and prefer a test the project's CI
+already runs over a command you ran by hand. Where the project has no way to
+test it, say so in the change rather than letting the omission pass unremarked.
+A test written before the change is better still, since one that has never
+failed has not been shown to test anything.
+
 Say what you did not verify. Name the platform, configuration, and version you
 tested on, and what you could not exercise: hardware you do not have, a build
 you cannot produce, a path the suite does not reach. Never claim verification
