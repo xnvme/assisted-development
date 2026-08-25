@@ -81,15 +81,25 @@ than showing it.
 
 ## Review before you push
 
-Run the `review` skill on a change before it leaves your machine: before the
-first push of a branch, before pushing to an open pull request, and before
-marking a draft ready. If it is not available to you, say so rather than
-improvising the procedure, since the point of it is that everyone follows the
-same one.
+You are about to ask another person to read this change. Be the first human
+who does. An agent can help you look, and should, but it cannot be the one
+who has looked.
+
+Before the first push of a branch, before pushing to an open pull request, and
+before marking a draft ready, go through it:
+
+- Reread these conventions, and check the change against them.
+- Read the project's own contributing documentation, and check the change
+  against that. It outranks this file where the two differ.
+- Read every commit message as a stranger would. Does it say why rather than
+  what, and does it carry the trailers the project expects?
+- Read the diff. All of it, not only the part you touched last.
+- Confirm that what you claim to have verified is what you actually ran.
 
 Nothing critical should be outstanding when you push. The exception is
 deferring to CI deliberately, when the reason for pushing is to have it check
-something you cannot check locally, and that is stated rather than assumed.
+something you cannot check locally, and you say so rather than leaving it
+assumed.
 
 ## Code comments
 

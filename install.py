@@ -11,8 +11,8 @@ Everything is a symlink back into this checkout, in the spirit of stow, so a
 Not stow itself, for three reasons. Stow mirrors a package tree one-to-one,
 and this needs one source at two targets plus a rename, which would mean
 committing a tree of tool-specific paths and symlinks: the thing the installer
-exists to avoid. Stow also folds trees, linking `~/.claude/skills` itself when
-it does not exist yet, which would force every skill you later write to live in
+exists to avoid. Stow also folds trees, linking `~/.claude/rules` itself when
+it does not exist yet, which would force every rule you later write to live in
 this repository. And it is a dependency, absent on Windows, for a page of
 Python.
 
@@ -24,17 +24,15 @@ What gets linked, relative to $HOME:
 
     .claude/rules/assisted-development.md -> AGENTS.md      (Claude Code)
     .pi/agent/AGENTS.md                   -> AGENTS.md      (pi)
-    .claude/skills/<name>                 -> skills/<name>  (Claude Code)
-    .agents/skills/<name>                 -> skills/<name>  (Codex, Cursor, pi)
 
 Nothing is ever overwritten. A path that already exists and is not a link into
 this checkout is reported and left alone, because it is someone else's file.
 
 Broken links into this checkout, left behind by anything renamed or removed
-here, are cleaned up by both actions, in the directories listed above. A link
-to a skill that no longer exists is a broken skill directory to whichever agent
-reads it, and only this checkout can know the skill is gone. Links that still
-resolve are left alone whoever made them.
+here, are cleaned up by both actions. The skill directories are swept too, so
+the `review` skill this repository used to ship is removed from an existing
+install rather than left dangling; only this checkout can know it is gone.
+Links that still resolve are left alone whoever made them.
 """
 
 import argparse
@@ -44,9 +42,10 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent
 
-# Where each tool looks for skills. Claude Code reads only .claude; Codex,
-# Cursor, and pi read .agents. One link per skill per directory covers all.
-SKILL_DIRS = [".claude/skills", ".agents/skills"]
+# This repository shipped skills until they were dropped in favour of a
+# checklist in AGENTS.md. Nothing is linked here any more; the directories are
+# still swept so an existing install loses its dangling skill links.
+LEGACY_SKILL_DIRS = [".claude/skills", ".agents/skills"]
 
 # Where each tool looks for instructions that load every session. Claude Code
 # does not read AGENTS.md at all, so its copy arrives as a user-level rule; pi
@@ -58,24 +57,19 @@ CONVENTION_LINKS = [
 ]
 
 
-def skills():
-    """Every skill directory in this checkout, sorted for stable output."""
-    root = REPO / "skills"
-    return sorted(d for d in root.iterdir() if (d / "SKILL.md").is_file())
-
-
 def links(home):
     """The (target, source) pairs this installer manages."""
     for target in CONVENTION_LINKS:
         yield home / target, REPO / "AGENTS.md"
-    for skill in skills():
-        for skill_dir in SKILL_DIRS:
-            yield home / skill_dir / skill.name, skill
 
 
 def scanned(home):
-    """The directories this installer puts links in, so it can find its own."""
-    roots = {home / skill_dir for skill_dir in SKILL_DIRS}
+    """The directories swept for links into this checkout.
+
+    The skill directories are included although nothing is linked into them
+    any more, so that a dangling link to a dropped skill is found.
+    """
+    roots = {home / skill_dir for skill_dir in LEGACY_SKILL_DIRS}
     roots.update((home / target).parent for target in CONVENTION_LINKS)
     return sorted(roots)
 
@@ -83,9 +77,9 @@ def scanned(home):
 def strays(home):
     """Broken links into this checkout that `links()` does not account for.
 
-    Rename or drop a skill and its old link stays behind, pointing at a path
-    that no longer exists. Nothing records the old name, so the only way to
-    find it is by where it points.
+    Drop something this repository used to ship and its old link stays
+    behind, pointing at a path that no longer exists. Nothing records the old
+    name, so the only way to find it is by where it points.
 
     Broken is part of the test, not an incidental detail. A link into this
     checkout that still resolves is someone's own alias, and deleting a
@@ -207,10 +201,8 @@ def main():
         print("Nothing was overwritten; resolve them and run again.")
         return 1
     if not args.uninstall and not args.dry_run:
-        print(
-            "\nStart your agent in any repository. The conventions load every"
-        )
-        print("session and the skills are available by name.")
+        print("\nStart your agent in any repository. The conventions load")
+        print("every session.")
     return 0
 
 

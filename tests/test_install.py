@@ -17,10 +17,9 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 INSTALL = REPO / "install.py"
 
-# One skill, one of each link, enough to tell the wiring is right without
-# restating the whole layout every time a skill is added.
+# One of each link, enough to tell the wiring is right without restating the
+# whole layout.
 RULE = ".claude/rules/assisted-development.md"
-SKILL_LINKS = [".claude/skills/review", ".agents/skills/review"]
 
 
 def run(home, *args):
@@ -54,13 +53,9 @@ class InstallTest(unittest.TestCase):
     def test_install_links_and_is_idempotent(self):
         first = run(self.home)
         self.assertEqual(first.returncode, 0, first.stderr)
-        for name in [RULE, ".pi/agent/AGENTS.md", *SKILL_LINKS]:
+        for name in [RULE, ".pi/agent/AGENTS.md"]:
             self.assertTrue((self.home / name).is_symlink(), name)
         self.assertEqual((self.home / RULE).resolve(), REPO / "AGENTS.md")
-        self.assertEqual(
-            (self.home / SKILL_LINKS[0]).resolve(),
-            REPO / "skills/review",
-        )
 
         # A second run must report the links rather than fail on them, since
         # the documented way to update is to pull and run it again.
@@ -70,7 +65,7 @@ class InstallTest(unittest.TestCase):
         self.assertIn("ok ", again.stdout)
 
     def test_occupied_path_is_left_alone(self):
-        target = self.home / SKILL_LINKS[0]
+        target = self.home / RULE
         target.parent.mkdir(parents=True)
         target.write_text("someone else's file")
 
@@ -79,11 +74,12 @@ class InstallTest(unittest.TestCase):
         self.assertIn("SKIP", result.stdout)
         self.assertEqual(target.read_text(), "someone else's file")
         # The rest still got linked; one occupied path does not stop the run.
-        self.assertTrue((self.home / SKILL_LINKS[1]).is_symlink())
+        self.assertTrue((self.home / ".pi/agent/AGENTS.md").is_symlink())
 
     def test_uninstall_removes_only_our_links(self):
         run(self.home)
         foreign = self.home / ".claude/skills/theirs"
+        foreign.parent.mkdir(parents=True, exist_ok=True)
         foreign.symlink_to("/somewhere/else")
 
         result = run(self.home, "--uninstall")
@@ -92,9 +88,10 @@ class InstallTest(unittest.TestCase):
         self.assertTrue(foreign.is_symlink())
 
     def test_stale_link_is_swept(self):
-        """A skill that was renamed upstream leaves a link nothing owns."""
+        """A dropped skill leaves a link that nothing owns."""
         run(self.home)
         stale = self.home / ".claude/skills/old-name"
+        stale.parent.mkdir(parents=True, exist_ok=True)
         stale.symlink_to(REPO / "skills/old-name")
         self.assertFalse(stale.exists())  # broken, as it would be in practice
 
@@ -103,11 +100,12 @@ class InstallTest(unittest.TestCase):
         self.assertIn("stale", result.stdout)
         self.assertFalse(stale.is_symlink())
         # The live links survived the sweep.
-        self.assertTrue((self.home / SKILL_LINKS[0]).is_symlink())
+        self.assertTrue((self.home / RULE).is_symlink())
 
     def test_uninstall_sweeps_a_stale_link(self):
         run(self.home)
         stale = self.home / ".claude/skills/old-name"
+        stale.parent.mkdir(parents=True, exist_ok=True)
         stale.symlink_to(REPO / "skills/old-name")
 
         result = run(self.home, "--uninstall")
@@ -119,6 +117,7 @@ class InstallTest(unittest.TestCase):
         """The rules directory is scanned too, not only the skills ones."""
         run(self.home)
         stale = self.home / ".claude/rules/old-name.md"
+        stale.parent.mkdir(parents=True, exist_ok=True)
         stale.symlink_to(REPO / "OLD-AGENTS.md")
 
         result = run(self.home)
@@ -130,7 +129,8 @@ class InstallTest(unittest.TestCase):
         """A link the user made themselves is not the installer's to remove."""
         run(self.home)
         alias = self.home / ".claude/skills/selfreview"
-        alias.symlink_to(REPO / "skills/review")
+        alias.parent.mkdir(parents=True, exist_ok=True)
+        alias.symlink_to(REPO / "AGENTS.md")
 
         result = run(self.home)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -140,6 +140,7 @@ class InstallTest(unittest.TestCase):
     def test_stale_link_survives_a_dry_run(self):
         run(self.home)
         stale = self.home / ".agents/skills/old-name"
+        stale.parent.mkdir(parents=True, exist_ok=True)
         stale.symlink_to(REPO / "skills/old-name")
 
         result = run(self.home, "--dry-run")

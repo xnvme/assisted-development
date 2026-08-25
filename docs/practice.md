@@ -137,10 +137,11 @@ can see the mismatch before anything is published.
 
 ## Self-review before pushing
 
-The `review` skill exists so this happens every time rather than when you
-remember. Run it before the first push, before pushing an update to an open pull
-request, and before marking a draft ready, since each of those is a moment when
-you are asking someone else for attention.
+The checklist in `AGENTS.md` exists so this happens every time rather than when
+you remember. Go through it before the first push, before pushing an update to
+an open pull request, and before marking a draft ready, since each of those is a
+moment when you are asking someone else for attention. An agent can walk it with
+you; it cannot be the one who walked it.
 
 The bar is that nothing critical is outstanding when you push: nothing that
 breaks users or the build, no secret, no data loss, no commit under the wrong

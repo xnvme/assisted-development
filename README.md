@@ -16,7 +16,7 @@ SPDX-License-Identifier: BSD-3-Clause
 [![format](https://github.com/xnvme/assisted-development/actions/workflows/format.yml/badge.svg)](https://github.com/xnvme/assisted-development/actions/workflows/format.yml)
 [![test](https://github.com/xnvme/assisted-development/actions/workflows/test.yml/badge.svg)](https://github.com/xnvme/assisted-development/actions/workflows/test.yml)
 
-Conventions and skills for assisted development.
+Conventions for assisted development.
 
 Install them for yourself and they apply in every repository you work on,
 including ones you have no say over. They hold the same for an agent and for the
@@ -26,10 +26,7 @@ person using one.
 
 - [`AGENTS.md`](AGENTS.md) states the conventions. It is the normative copy and
   the file an agent loads.
-- [`skills/`](skills) holds the procedure: `review` checks a change that is
-  checked out, yours before it leaves the machine or someone else's pull
-  request, and posts the findings to that pull request when asked.
-- [`install.py`](install.py) links the conventions and the skill into your agent
+- [`install.py`](install.py) links the conventions into your agent
   configuration, and [`tests/`](tests) checks that it does, since it writes into
   your `$HOME`.
 - [docs/practice.md](docs/practice.md) is the reasoning behind the conventions,
@@ -82,19 +79,19 @@ updates every tool at once rather than leaving copies to drift, and
 `./install.py --uninstall` leaves nothing behind. It never overwrites: a path
 that already exists and is not one of its links is reported and left alone. The
 one thing it removes uninvited is a link into the checkout whose target has
-gone, which is what a renamed or deleted skill leaves behind.
+gone, which is what anything dropped from here leaves behind. The skill
+directories are swept for that reason, so the `review` skill this repository
+used to ship is removed from an existing install rather than left dangling.
 
 ```
 ~/.claude/rules/assisted-development.md -> AGENTS.md      (Claude Code)
 ~/.pi/agent/AGENTS.md                   -> AGENTS.md      (pi)
-~/.claude/skills/<name>                 -> skills/<name>  (Claude Code)
-~/.agents/skills/<name>                 -> skills/<name>  (Codex, Cursor, pi)
 ```
 
 This is why the repository has no tool-specific files in it. The layout here is
-the standard one, `AGENTS.md` and `skills/`, and the installer puts copies where
-each tool insists on looking. Claude Code not reading `AGENTS.md` becomes its
-problem rather than the repository's.
+the standard one, a single `AGENTS.md`, and the installer puts links where each
+tool insists on looking. Claude Code not reading `AGENTS.md` becomes its problem
+rather than the repository's.
 
 On native Windows without Developer Mode, symlink creation fails; the installer
 says so, and copying the directories works at the cost of re-copying to update.
@@ -126,23 +123,13 @@ for the many repositories that state nothing.
 
 ## Where each tool looks
 
-The skills follow the [Agent Skills](https://agentskills.io) standard, so the
-files are portable. Their locations are not, which is what the installer exists
-to paper over:
+The conventions are one file. Where a tool expects to find it, for rules that
+load in every repository rather than one, is not standardised, which is what
+the installer exists to paper over:
 
-- Claude Code reads only `.claude/skills/`, and this is not configurable. It
-  does not read `AGENTS.md` at all; user-level rules in `.claude/rules/` are the
-  way in.
-- Codex reads only `.agents/skills/`.
-- Cursor reads `.agents/skills/` and `.cursor/skills/`, with `.claude/skills/`
-  and `.codex/skills/` for compatibility.
-- Copilot reads `.github/skills/`, `.claude/skills/`, or `.agents/skills/`.
-- pi reads `~/.agents/skills/` and `~/.pi/agent/skills/`, and is the only one
-  that reads a global `AGENTS.md`, at `~/.pi/agent/AGENTS.md`.
-
-Keep skill frontmatter to the spec's fields, which are `name`, `description`,
-`license`, `compatibility`, `metadata`, and `allowed-tools`. Claude Code accepts
-more, and every extra one quietly does nothing elsewhere.
+- Claude Code does not read `AGENTS.md` at all, and this is not configurable.
+  User-level rules in `.claude/rules/` are the way in.
+- pi reads a global `AGENTS.md`, at `~/.pi/agent/AGENTS.md`.
 
 ## Working on this repository
 
@@ -153,11 +140,9 @@ runs both, so run both before pushing. `make` on its own lists every target.
 ## Out of scope
 
 **Committing this into a project.** Possible for a repository you own: copy
-`AGENTS.md` to the root and `skills/` to `.agents/skills/`, and for Claude Code
-add a `CLAUDE.md` containing `@AGENTS.md` and a second copy of the skills in
-`.claude/skills/`, the only place it reads them from. It binds every
-contributor rather than the ones who installed it, at the cost of a copy per
-project. Installing out of tree is the model here.
+`AGENTS.md` to the root, and for Claude Code add a `CLAUDE.md` containing
+`@AGENTS.md`. It binds every contributor rather than the ones who installed it,
+at the cost of a copy per project. Installing out of tree is the model here.
 
 **Running an agent on its own account.** An agent with its own forge account
 needs rules about who it is and what it may not do, which hold everywhere it

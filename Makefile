@@ -52,7 +52,7 @@ test:
 	@echo "## assisted-development: test [DONE]"
 
 define install-help
-# Link the conventions and skills into your agent configuration
+# Link the conventions into your agent configuration
 endef
 .PHONY: install
 install:
