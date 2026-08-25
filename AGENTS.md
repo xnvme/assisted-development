@@ -85,6 +85,22 @@ In a pull request description, name what a reviewer should look at carefully.
 Do not summarise the diff, which is already there. Then leave the merge to the
 human accepting the change.
 
+## Code comments
+
+Do not add a comment unless the code cannot state the thing itself. Explain
+why, never what. A comment restating the line below it is noise, and every
+later reader pays for it.
+
+Where one earns its place, keep it to a line or two. A vendor quirk, a
+precondition that holds for a reason elsewhere, a sentinel that means
+something particular, why an obvious simplification does not work. Prefer a
+docstring on the function over a comment inside it, since that is where a
+caller looks.
+
+A wrong comment is worse than none. When you change what code does, fix or
+delete the comments describing the old behaviour in the same change. Nothing
+compiles or tests a comment, so nothing else will catch it.
+
 ## Commit messages
 
 Use Conventional Commits format.
