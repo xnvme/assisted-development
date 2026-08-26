@@ -168,3 +168,43 @@ If a bug might be a security vulnerability, send nothing: no issue, no
 comment, no pull request. Report it to the human and stop. A fix in public
 discloses the flaw to everyone reading, so who to tell, and when, is a
 decision for a person.
+
+## Style guide for .c and .h files
+
+- Always use curly brackets for `if` and `for` statements, even for single-line
+  bodies.
+
+  ```c
+  // correct
+  if (condition) {
+      do_something();
+  }
+
+  // wrong
+  if (condition)
+      do_something();
+  ```
+
+- Always declare variables at the top of a block, never in the middle.
+  Exception: loop variables may be declared in a `for` initialiser
+  (`for (int i = 0; ...)`).
+
+- Declare `int err` at the top of a block for error handling. Assign call results
+  to `err` and check it separately, rather than embedding calls directly in `if`
+  conditions. This does not apply to `strcmp`, which may be called directly inside
+  an `if` condition.
+
+  ```c
+  // correct
+  int err;
+
+  err = write(fd, str, sizeof(str));
+  if (err < 0) {
+      return err;
+  }
+
+  // wrong
+  if (write(fd, str, sizeof(str)) < 0) {
+      return -1;
+  }
+  ```
