@@ -55,6 +55,23 @@ Do not add "Generated with ..." or similar prose to commit messages or pull
 request descriptions. The trailer already records it, in a form that can be
 searched.
 
+Disclose a review the same way. Where an agent helped produce one, say so in
+the review body, not on the individual comments, and carry the trailer there
+too:
+
+```
+Reviewed with a coding agent. What was built or run is stated above; anything
+not stated was read rather than exercised. Push back where it is wrong.
+
+Assisted-by: Claude Code:claude-opus-5
+```
+
+A review is a claim about somebody else's work, and an agent will make one
+confidently and wrongly. Someone deciding whether to act on a finding is owed
+both the fact that a tool produced it and a plain statement of which parts
+were exercised and which were only read. Whoever posts it answers for it
+either way, exactly as the sign-off works on a commit.
+
 ## Say what you did not verify
 
 Name what was run, where, and what was not exercised: hardware nobody has, a
