@@ -18,9 +18,19 @@ SPDX-License-Identifier: BSD-3-Clause
 
 Conventions for assisted development.
 
-Install them for yourself and they apply in every repository you work on,
-including ones you have no say over. They hold the same for an agent and for the
-person using one.
+assisted-development defines how a person and an AI tool share the work: what
+the person remains accountable for, what is disclosed, and what must be verified
+rather than claimed. Commits and reviews are where that becomes visible to
+everyone else. The definition is deliberately short. `AGENTS.md` loads into
+every session in every repository, so every sentence in it takes space an agent
+could spend on the task in front of it. A convention stays only if it changes
+what the agent does. The reasoning behind it goes in
+[docs/practice.md](docs/practice.md), which no agent loads. It is not a library
+of skills or prompts to lift.
+
+Install the conventions for yourself and they apply in every repository you
+work on, including ones you have no say over. They hold the same for an agent
+and for the person using one.
 
 ## What is here
 
