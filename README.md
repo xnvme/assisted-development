@@ -77,11 +77,10 @@ cd ~/git/assisted-development
 Everything it creates is a symlink back into the checkout, so `git pull`
 updates every tool at once rather than leaving copies to drift, and
 `./install.py --uninstall` leaves nothing behind. It never overwrites: a path
-that already exists and is not one of its links is reported and left alone. The
-one thing it removes uninvited is a link into the checkout whose target has
-gone, which is what anything dropped from here leaves behind. The skill
-directories are swept for that reason, so the `review` skill this repository
-used to ship is removed from an existing install rather than left dangling.
+that already exists and is not one of its links is reported and left alone. It
+removes one thing uninvited, a link into the checkout whose target no longer
+exists, so an install follows what is here rather than accumulating links to
+things that have gone.
 
 ```
 ~/.claude/rules/assisted-development.md -> AGENTS.md      (Claude Code)
