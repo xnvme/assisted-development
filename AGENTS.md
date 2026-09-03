@@ -142,8 +142,27 @@ survives review.
 
 Anchor each comment to the line it is about. What cannot be anchored, a base
 branch pointing at the wrong place or a dependency the branch does not
-contain, belongs in the summary. Where there is nothing of that kind, the
-summary is one line.
+contain, belongs in the summary.
+
+## Review summaries
+
+The summary is three paragraphs. The verdict first, whether it is in good
+shape and whether anything blocks merging. Then what the inline comments are,
+and whether they are small and simple or need more work. Then what could or
+should be addressed in a follow-up rather than here.
+
+Do not recap the change. This is the same rule as for the comments, and the
+summary is where it gets broken, because there is room to be discursive. The
+author wrote the thing and is reading to find out what to address; a
+description of what it does is work they must skim past to reach the point.
+
+Keep the follow-up material in that third paragraph rather than inline. A
+comment anchored to a line reads as a condition of merging, and most of what
+belongs in a follow-up is not.
+
+What was and was not verified goes after the three paragraphs, with the
+trailer. That is a claim about what you did rather than a description of the
+change, so it stays when everything else is cut.
 
 ## Code comments
 
