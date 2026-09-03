@@ -160,6 +160,10 @@ Keep the follow-up material in that third paragraph rather than inline. A
 comment anchored to a line reads as a condition of merging, and most of what
 belongs in a follow-up is not.
 
+Introduce what is not about a line by naming its subject. "On the commit
+message:" and then the defect. Not "one thing that cannot be anchored", which
+spends the same words on filing mechanics the reader can see for themselves.
+
 What was and was not verified goes after the three paragraphs, with the
 trailer. That is a claim about what you did rather than a description of the
 change, so it stays when everything else is cut.
