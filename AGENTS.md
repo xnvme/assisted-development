@@ -118,6 +118,33 @@ deferring to CI deliberately, when the reason for pushing is to have it check
 something you cannot check locally, and you say so rather than leaving it
 assumed.
 
+## Review comments
+
+A review comment exists to get something changed. Write the defect and the
+change that fixes it, and stop there.
+
+Do not list what the change gets right. It costs the author the work of
+sorting the praise from the parts that need attention, and it makes a short
+review look long.
+
+Do not explain what the defect leads to. The author knows what they intended;
+what they need is what the code does instead. Where the consequence is not
+obvious from the defect, one sentence. Where it is, none.
+
+Name the code rather than describing it. Write the identifiers as they appear,
+`nvme_qpair_term()` or `cmd.opc = 0x0`, never "the teardown call" or "the
+delete commands". A paraphrase makes the reader hunt for the thing you meant,
+and it hides the case where you had the wrong thing in mind.
+
+Check that every identifier you cite exists before you post. A plausible
+invented name is worse than vague prose, because it reads as authoritative and
+survives review.
+
+Anchor each comment to the line it is about. What cannot be anchored, a base
+branch pointing at the wrong place or a dependency the branch does not
+contain, belongs in the summary. Where there is nothing of that kind, the
+summary is one line.
+
 ## Code comments
 
 Do not add a comment unless the code cannot state the thing itself. Explain
