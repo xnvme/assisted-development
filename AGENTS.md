@@ -96,6 +96,13 @@ what remains unexercised anywhere. A reviewer needs to know what the green
 checkmark does not cover, and a narrative of the testing hides that rather
 than showing it.
 
+None of that goes in a commit message. A commit message says why the change
+exists, and it outlives the branch, the machine and the CI run, so what was
+built, what was run and what it ran on are already stale by the time anyone
+reads it. Verification belongs in the pull request description and in a review
+body. Asking an author to put it in the commit message is itself a review
+defect.
+
 ## Review before you push
 
 You are about to ask another person to read this change. Be the first human
