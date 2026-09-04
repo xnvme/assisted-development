@@ -6,11 +6,11 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # Assisted development
 
-This describes how we use coding agents on the projects we maintain, among
-them those in the `xnvme` organisation on GitHub. It is deliberately short. It
-is not a style guide for agents and not a collection of prompts. It says what
-we expect of a contribution an agent helped produce, and the few habits we
-agreed on because we kept running into their absence.
+How we use coding agents on the projects we maintain, among them those in the
+`xnvme` organisation on GitHub: what we expect of a contribution an agent
+helped produce. "You" below is whoever is doing the work, the person or the
+agent. Where a step needs a human, an agent does what it can, reports, and
+hands over rather than standing in for them.
 
 Assisted development is not vibe-coding. The difference is accountability. A
 contributor has read the change, understands it, can say why it is correct,
@@ -19,13 +19,13 @@ none of that. Code nobody has read does not go in.
 
 These apply where a project says nothing. **The project's conventions win.**
 Read its `CONTRIBUTING`, its contributing documentation, or its own
-`AGENTS.md` first, and follow those where they differ from this file. A
-contributor adapts to the project; the project does not adapt to them.
+`AGENTS.md` before starting, and follow those where they differ from this
+file.
 
 ## Attribution
 
 Record the assistance with an `Assisted-by:` trailer naming the agent and the
-model version:
+model version actually used, not the ones in the example:
 
 ```
 Assisted-by: Claude Code:claude-opus-5
@@ -35,9 +35,10 @@ Append analysis tools space-separated when they were used, for example
 `Assisted-by: Claude Code:claude-opus-5 coccinelle sparse`. Never list basic
 tools such as git, compilers, or editors.
 
-We disclose for two reasons. A reviewer deciding how hard to look benefits
-from knowing how a change was produced. And it is searchable afterwards, which
-is how we find out whether this way of working is going well.
+The trailer tells a reviewer how the change was produced, so they can decide
+how hard to look, and it is searchable afterwards. It is the only disclosure:
+no "Generated with ..." or similar prose in commit messages or pull request
+descriptions.
 
 The trailer goes before the sign-off, so the sign-off stays last:
 
@@ -48,16 +49,12 @@ Signed-off-by: Full Name <address>
 
 `Signed-off-by:` names the human sponsoring the contribution under the
 project's terms. If no human is willing to, the contribution should not be
-made. Never use `Co-Authored-By:` for an agent: the author is accountable, the
-sign-off certifies, and `Assisted-by:` only discloses what helped.
+made. Never use `Co-Authored-By:` for an agent, whatever the tool suggests:
+the author is accountable, the sign-off certifies, and `Assisted-by:` only
+discloses what helped.
 
-Do not add "Generated with ..." or similar prose to commit messages or pull
-request descriptions. The trailer already records it, in a form that can be
-searched.
-
-Disclose a review the same way. Where an agent helped produce one, say so in
-the review body, not on the individual comments, and carry the trailer there
-too:
+Disclose a review the same way, in the review body rather than on the
+individual comments, with the trailer:
 
 ```
 Reviewed with a coding agent. What was built or run is stated above; anything
@@ -76,19 +73,18 @@ either way, exactly as the sign-off works on a commit.
 
 Name what was run, where, and what was not exercised: hardware nobody has, a
 build that was not produced, a path the suite does not reach. Never claim
-verification that did not happen.
+verification that did not happen. This is the one we care about most: an
+agent will write a confident summary of work it did not check, and that
+summary is believed.
 
-This is the one we care about most. An agent will write a confident summary of
-work it did not check, and that summary is believed.
+Reproduce a bug before fixing it. A fix for a bug inferred from reading the
+code is a guess wearing a diff.
 
 Every change carries a test. Whatever you add, remove, or alter, leave behind
 something that fails when it is wrong, and prefer a test the project's CI
 already runs over a command you ran by hand. Where the project has no way to
 test it, say so in the change rather than letting the omission pass
 unremarked.
-
-Reproduce a bug before fixing it. A fix for a bug inferred from reading the
-code is a guess wearing a diff.
 
 Where a pull request describes verification, keep it to the gap and the
 remedy: why CI does not cover the change, what was run by hand instead, and
@@ -168,16 +164,14 @@ summary is where it gets broken, because there is room to be discursive. The
 author wrote the thing and is reading to find out what to address; a
 description of what it does is work they must skim past to reach the point.
 
-Keep the follow-up material in that third paragraph rather than inline. A
-comment anchored to a line reads as a condition of merging, and most of what
-belongs in a follow-up is not.
-
-That rule runs both ways. Anything the author must act on before merging is
-anchored to a line, and the third paragraph holds nothing they have to do.
-More anchors than you think: a missing test anchors to the code it would
-cover, an unchecked error path to the line that returns it. Where something
-blocking genuinely cannot be anchored, put it in the first paragraph with the
-verdict, never in the third, where it reads as optional.
+Inline comments and the third paragraph divide by one test: whether the author
+must act on it before merging. What they must act on is anchored to a line,
+since a comment on a line reads as a condition of merging, and the third
+paragraph holds nothing they have to do, since it reads as optional. More
+anchors than you think: a missing test anchors to the code it would cover, an
+unchecked error path to the line that returns it. Where something blocking
+genuinely cannot be anchored, put it in the first paragraph with the verdict,
+never in the third.
 
 Introduce what is not about a line by naming its subject. "On the commit
 message:" and then the defect. Not "one thing that cannot be anchored", which
@@ -218,11 +212,10 @@ Never use em dashes when forming sentences. Use a comma, semicolon, or period
 instead. Do not use `--` as a substitute either; reserve `--` for shell flag
 syntax, for example `--provider`.
 
-Use plain typeable characters. Letters with national diacritics (e.g. æ ø å
-ä ö ü ß é à ç ñ) are fine when writing in those languages. Do not use
-other typographic substitutes such as en dashes, curly quotes, ellipsis
-characters, or fancy arrows and bullets. Use the ASCII equivalents: `-`, `"`,
-`'`, `...`, `->`, `*`.
+The same goes for every other typographic substitute: en dashes, curly quotes,
+ellipsis characters, fancy arrows and bullets. Use the plain typeable
+equivalents, `-`, `"`, `'`, `...`, `->`, `*`. Letters with national diacritics
+(e.g. æ ø å ä ö ü ß é à ç ñ) are fine when writing in those languages.
 
 Default to prose. Do not use bullet lists in pull request descriptions, commit
 messages, or explanations. Reserve bullets for literal inventories such as
