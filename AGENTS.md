@@ -172,6 +172,13 @@ Keep the follow-up material in that third paragraph rather than inline. A
 comment anchored to a line reads as a condition of merging, and most of what
 belongs in a follow-up is not.
 
+That rule runs both ways. Anything the author must act on before merging is
+anchored to a line, and the third paragraph holds nothing they have to do.
+More anchors than you think: a missing test anchors to the code it would
+cover, an unchecked error path to the line that returns it. Where something
+blocking genuinely cannot be anchored, put it in the first paragraph with the
+verdict, never in the third, where it reads as optional.
+
 Introduce what is not about a line by naming its subject. "On the commit
 message:" and then the defect. Not "one thing that cannot be anchored", which
 spends the same words on filing mechanics the reader can see for themselves.
