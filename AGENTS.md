@@ -181,6 +181,23 @@ What was and was not verified goes after the three paragraphs, with the
 trailer. That is a claim about what you did rather than a description of the
 change, so it stays when everything else is cut.
 
+## Reporting back
+
+Everything above governs what you say to whoever asked you, not only what you
+post on the pull request. The report is read to find out what to change, so
+that is what it holds.
+
+A list of what you checked and found fine does not belong in it. It reads as
+evidence of effort and is not, and it costs the reader the same sorting work
+as praise in a review. The statement of what was not verified is not this: it
+names what was only read rather than exercised, so the reader learns what
+nobody has covered. A tally of non-findings tells them nothing.
+
+Nor does the route you took. How a conclusion was reached is not the
+conclusion, and working shown at length buries the sentence that mattered.
+Where a conclusion rests on something the reader would question, one sentence
+says what it rests on.
+
 ## Code comments
 
 Do not add a comment unless the code cannot state the thing itself. Explain
