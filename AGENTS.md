@@ -134,6 +134,11 @@ Do not list what the change gets right. It costs the author the work of
 sorting the praise from the parts that need attention, and it makes a short
 review look long.
 
+This includes agreeing with the author. That the bug is real, that the
+diagnosis holds, that a mechanism is correct: none of it tells them what to
+do, and an opening that grants it is the same praise in a place it is harder
+to skip.
+
 Do not explain what the defect leads to. The author knows what they intended;
 what they need is what the code does instead. Where the consequence is not
 obvious from the defect, one sentence. Where it is, none.
