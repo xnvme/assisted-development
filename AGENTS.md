@@ -223,6 +223,23 @@ one.
 The same goes for a pull request description. Name what a reviewer should look
 at carefully rather than summarising the change.
 
+## References to the hosting service
+
+Commit messages and source code do not refer to pull requests, issues, or
+anything else the hosting service numbers or links. Git is the record. GitHub
+is a service on top of it, and the history and the code outlive it: they are
+cloned, mirrored, moved to another host, and read offline, where `#811` names
+nothing or something else.
+
+Say instead what the reference would have pointed at. Name the behaviour, the
+function, or the commit, and name a commit by its abbreviated hash and its
+subject. The same goes for closing keywords such as `Fixes #123` and for links
+to the service.
+
+A pull request description and its review comments live on the service, so they
+may refer to its issues and pull requests freely. That is where a closing
+keyword belongs.
+
 ## Writing style
 
 Never use em dashes when forming sentences. Use a comma, semicolon, or period
