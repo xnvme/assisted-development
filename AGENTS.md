@@ -53,21 +53,19 @@ made. Never use `Co-Authored-By:` for an agent, whatever the tool suggests:
 the author is accountable, the sign-off certifies, and `Assisted-by:` only
 discloses what helped.
 
-Disclose a review the same way, in the review body rather than on the
-individual comments, with the trailer:
+Disclose a review the same way, with the trailer at the end of the review
+body rather than on the individual comments:
 
 ```
-Reviewed with a coding agent. What was built or run is stated above; anything
-not stated was read rather than exercised. Push back where it is wrong.
-
 Assisted-by: Claude Code:claude-opus-5
 ```
 
 A review is a claim about somebody else's work, and an agent will make one
 confidently and wrongly. Someone deciding whether to act on a finding is owed
-both the fact that a tool produced it and a plain statement of which parts
-were exercised and which were only read. Whoever posts it answers for it
-either way, exactly as the sign-off works on a commit.
+both the fact that a tool produced it and which findings were exercised and
+which were only read. The trailer says the first; the label on each finding
+says the second (see Review comments). Whoever posts it answers for it either
+way, exactly as the sign-off works on a commit.
 
 ## Say what you did not verify
 
@@ -152,34 +150,64 @@ Anchor each comment to the line it is about. What cannot be anchored, a base
 branch pointing at the wrong place or a dependency the branch does not
 contain, belongs in the summary.
 
+Open each point with a label saying what kind of point it is:
+
+- `Issue:` a defect that was reproduced or observed: a run that fails, a log,
+  a search that shows the missing test.
+- `Suspicion:` a defect that follows from reading the code alone, with
+  nothing to reproduce it. Without a reproducer or an observation, it cannot
+  be called more than that.
+- `Requirement:` a rule the project holds the change to, with the rule named
+  in the sentence: a commit-message convention, a licence header, a test the
+  contributing guide asks for.
+- `Suggestion:` an improvement the author may take or leave.
+
+The fix for an issue, a suspicion or a requirement goes in the same comment,
+as its own paragraph opening `Suggested fix:`. Folded into the finding's
+paragraph, it reads as part of the observation and gets overlooked.
+
+Make one point per comment. Points that are unrelated go in separate comments,
+even on the same line, so each has a thread of its own and nobody has to work
+out which belong together.
+
+Suggest only what can be done. A test for a path CI cannot run, hardware it
+does not have, is no suggestion; say that it cannot be covered, and suggest
+what can.
+
 ## Review summaries
 
-The summary is three paragraphs. The verdict first, whether it is in good
-shape and whether anything blocks merging. Then what the inline comments are,
-and whether they are small and simple or need more work. Then what could or
-should be addressed in a follow-up rather than here.
+The verdict is the review's state, not a sentence. Request changes for an
+issue or a requirement; a review whose only defects are suspicions is a
+comment, since a suspicion asks the author to look rather than to fix.
+Approve when nothing needs changing.
+
+Do not restate the inline comments. Point at them with "See the inline
+comments." and leave their content where it is: said twice, in two wordings, a
+point costs the reader the work of matching them up. What the summary adds is
+only what is not about a line, then what could be addressed in a follow-up
+rather than here.
 
 Do not recap the change. This is the same rule as for the comments, and the
 summary is where it gets broken, because there is room to be discursive. The
 author wrote the thing and is reading to find out what to address; a
 description of what it does is work they must skim past to reach the point.
 
-Inline comments and the third paragraph divide by one test: whether the author
-must act on it before merging. What they must act on is anchored to a line,
-since a comment on a line reads as a condition of merging, and the third
-paragraph holds nothing they have to do, since it reads as optional. More
+Inline comments and the follow-ups divide by one test: whether the author must
+act on it before merging. What they must act on is anchored to a line, since a
+comment on a line reads as a condition of merging, and the follow-ups hold
+nothing they have to do, since they read as optional. More
 anchors than you think: a missing test anchors to the code it would cover, an
 unchecked error path to the line that returns it. Where something blocking
-genuinely cannot be anchored, put it in the first paragraph with the verdict,
-never in the third.
+genuinely cannot be anchored, put it in the summary ahead of the follow-ups,
+never among them.
 
 Introduce what is not about a line by naming its subject. "On the commit
 message:" and then the defect. Not "one thing that cannot be anchored", which
 spends the same words on filing mechanics the reader can see for themselves.
 
-What was and was not verified goes after the three paragraphs, with the
-trailer. That is a claim about what you did rather than a description of the
-change, so it stays when everything else is cut.
+The trailer ends the summary. What was exercised and what was only read is
+already on each finding, as an issue or a suspicion, so it needs no paragraph
+of its own.
 
 ## Reporting back
 
