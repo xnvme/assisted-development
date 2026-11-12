@@ -291,6 +291,14 @@ Describe things technically, not figuratively: "a hand-written C header that
 represents the data structures of the NVMe specifications as C structs, enums
 and macros", not "a hand-typed copy of the figures".
 
+Use the technical verb for what happens: a build enables or disables a
+backend, a function returns -EINVAL for an argument out of range, a commit adds
+or removes a file. Do not describe code as acting with intent, as in "leave
+upcie-cuda out", "the kernel keeps the op away from the server" or "a function
+refuses the argument", and do not dramatize, as in "blazingly fast" or
+"unprecedented efficiency". Write "fix(build): disable the upcie-cuda backend
+when nvcc is not found".
+
 Be specific. Give the number, the name, the figure. Replace "several", "often"
 and "significant" with what they stand for, or delete them. Do not claim what
 was not measured: "the coding agent takes each value from the data model",
