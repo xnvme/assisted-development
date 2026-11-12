@@ -248,9 +248,6 @@ Use Conventional Commits format. Focus on motivation, the why, rather than
 describing the diff, which is already there. One to three paragraphs, ideally
 one.
 
-The same goes for a pull request description. Name what a reviewer should look
-at carefully rather than summarising the change.
-
 ## References to the hosting service
 
 Commit messages and source code do not refer to pull requests, issues, or
