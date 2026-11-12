@@ -270,6 +270,38 @@ keyword belongs.
 
 ## Writing style
 
+Write plain, precise prose for a technical reader who has not seen your
+working notes. This holds for every text people read: commit messages, pull
+requests, documentation, code comments, docstrings, test names and reports.
+
+Write the essence and stop. Before writing, decide what the reader must know
+or do, write that, and leave the rest out: what the reader already knows, how
+you got there, a recap, hedging, and a closing summary. Delete a sentence that
+the reader would not miss.
+
+Name the subject of every sentence: "senfd lint", "the Base 2.4 PDF", "the
+five headers named in section 1". Do not leave the reader to resolve "it",
+"this", "that copy" or "the same check". Where a pronoun could point at two
+things, repeat the noun.
+
+Use normal word order and literal statements. Do not invert sentences,
+compress them into fragments, end a paragraph with an epigram, or open one
+with a bold lead-in. Not "a chat asks for none" or "fixed once", but "Opus
+gave the Sanitize Namespace command the opcode 85h in all three runs; the
+figure gives 8Ch."
+
+Describe things technically, not figuratively: "a hand-written C header that
+represents the data structures of the NVMe specifications as C structs, enums
+and macros", not "a hand-typed copy of the figures".
+
+Be specific. Give the number, the name, the figure. Replace "several", "often"
+and "significant" with what they stand for, or delete them. Do not claim what
+was not measured: "the coding agent takes each value from the data model",
+not "this reduces hallucinations".
+
+Keep the register measured, written for a reviewer and not as a pitch: "wrong
+answers", not "hallucinations"; no "game-changing" or "seamless".
+
 Never use em dashes when forming sentences. Use a comma, semicolon, or period
 instead. Do not use `--` as a substitute either; reserve `--` for shell flag
 syntax, for example `--provider`.
@@ -281,9 +313,11 @@ equivalents, `-`, `"`, `'`, `...`, `->`, `*`. Letters with national diacritics
 
 Default to prose. Do not use bullet lists in pull request descriptions, commit
 messages, or explanations. Reserve bullets for literal inventories such as
-file lists and ordered procedure steps.
+file lists and ordered procedure steps. Use plain headings that say what the
+section holds.
 
-Sentences should be short.
+Sentences should be short. When a text gets too long, cut content rather than
+compress sentences.
 
 ## Licensing and provenance
 
